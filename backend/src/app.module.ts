@@ -7,12 +7,10 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [
-    MongooseModule.forRoot(
-      'mongodb+srv://nhutpro:Trannhut1@cluster0.gffbh.mongodb.net/appchat?retryWrites=true&w=majority',
-    ),
+    ConfigModule.forRoot(),
+    MongooseModule.forRoot(process.env.DATABASE),
     UserModule,
     AuthModule,
-    ConfigModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [AppService],
