@@ -51,19 +51,26 @@ export class UserService {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
   }
-  async signup(user: UserI): Promise<UserI> {
+  async signup(user: UserI): Promise<any> {
     const exist: boolean = await this.mailExists(user.email);
     try {
       if (exist) {
         throw new HttpException('Email is already in use', HttpStatus.CONFLICT);
       } else {
-        const hashedPassword: string = await this.AuthService.hashPassword(
+        const hashdPassword: string = await this.AuthService.hashPassword(
           user.password,
         );
         user.email = user.email.toLocaleLowerCase();
-        user.password = hashedPassword;
-        const newUser = await this.UserModel.create(user);
-        return newUser;
+        user.password = hashdPassword;
+        try {
+          const newUser = await this.UserModel.create(user);
+          return {
+            status: '200',
+            message: 'successfull',
+          };
+        } catch (err) {
+          throw new HttpException('Errror', HttpStatus.INTERNAL_SERVER_ERROR);
+        }
       }
     } catch (err) {
       throw new HttpException('Email is already in use', HttpStatus.CONFLICT);
