@@ -1,15 +1,28 @@
 import React from 'react'
 import { useState } from 'react';
 import { publicRequest } from '../../services/request';
+import {Link,useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import { loginSuccess } from '../../redux/user';
 const Login = () => {
+  const dispatch = useDispatch();
     const [email, setEmail] = useState("");
     const [password,setPassword] = useState("");
+    const navigate = useNavigate();
     const handleSubmit = (e)=>{
         e.preventDefault();
-        publicRequest.post("user/login",{
-            email: email,
+        publicRequest.post("auth/login",{
+            username: email,
             password: password
-        }).then((res)=>{console.log(res.data)}).catch((err)=>{
+        }).then((res)=>{
+         
+          if(res.status === 201)
+          {
+            dispatch(loginSuccess(res.data))
+            navigate("/home")
+            
+          }
+        }).catch((err)=>{
             
         })
     }
@@ -18,7 +31,7 @@ const Login = () => {
     <p>Log In</p>
     <form>
         <div className='form__input'>
-        <label htmlFor="email">email </label>
+        <label htmlFor="email">username </label>
         <input value={email} id="email" onChange={(e)=>{setEmail(e.target.value)}}></input>
         </div>
     
@@ -29,6 +42,9 @@ const Login = () => {
         
         <button  type='submit' onClick={handleSubmit}>submit</button>
     </form>
+    <Link to="/signup"> 
+    <p>Go to sign up</p>
+    </Link>
 </div>
   )
 }

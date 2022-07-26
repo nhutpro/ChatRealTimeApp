@@ -2,18 +2,23 @@ import React from 'react'
 import { useState } from 'react'
 import "./Signup.scss"
 import { publicRequest } from '../../services/request'
+import { Link,useNavigate } from 'react-router-dom'
 export const Signup = () => {
+    const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
     const handdleSubmit = (e)=>{
         e.preventDefault();
-                publicRequest.post("user/signup", {
+                publicRequest.post("auth/signup", {
                     username: username,
                     email:email,
                     password: password,
                 }).then((res)=>{
-                    console.log(res.data);
+                    if(res.status === 201)
+                    {
+                        navigate("/login");
+                    }
                 }).catch((err)=>{
                     console.log(err)
                 })
@@ -38,6 +43,9 @@ export const Signup = () => {
             
             <button  type='submit' onClick={handdleSubmit}>submit</button>
         </form>
+        <Link to="/login">
+            <p>go to login</p>
+        </Link>
     </div>
   )
 }
