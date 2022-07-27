@@ -13,5 +13,10 @@ export class User {
   username: string;
   @Prop()
   password: string;
+  @Prop({
+    default: 'http://localhost:3001' + '/avartarDefault.jpg',
+  })
+  avatar: string;
 }
 export const UserSchema = SchemaFactory.createForClass(User);
+// console.log(process.env.HOST);

@@ -6,6 +6,9 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { ChatModule } from './chat/chat.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+import { RoomModule } from './room/room.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -13,8 +16,14 @@ import { ChatModule } from './chat/chat.module';
     UserModule,
     AuthModule,
     ChatModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'src', 'public'),
+    }),
+    RoomModule,
   ],
+
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
+console.log(join(__dirname, '..', 'src', 'public'));

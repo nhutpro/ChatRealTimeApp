@@ -1,0 +1,11 @@
+.home {
+    .home__body {
+        display: flex;
+        .listFriend{
+            width: 40%;
+        }
+        .listMessage{
+            width: 60% ;
+        }
+    }
+}

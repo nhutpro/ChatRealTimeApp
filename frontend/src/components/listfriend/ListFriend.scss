@@ -1,0 +1,44 @@
+.listFriend{
+    .search{
+     display: flex;
+     justify-content: center;
+        .search__input{ 
+            border-bottom: 1px solid #ccc;
+            input{
+                border: none;
+                outline: none;
+                &:active{
+                    border: none;
+                    outline: none;
+                }
+            }
+         
+        }
+    }
+    .friend__list{
+
+        .friend__item{
+            margin-top: 10px;
+            display: flex;
+            background-color: #FFFFCC;
+            align-items: center;
+            border-radius: 10px;
+            .friend__avatar{
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                overflow: hidden;
+                img{
+                    width: 100%;
+                    height: 100%;
+                }
+
+            }
+            p{
+                margin-left: 20px;
+            }
+        }
+        
+    }
+    
+}
