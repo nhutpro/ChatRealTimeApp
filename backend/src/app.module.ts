@@ -9,6 +9,7 @@ import { ChatModule } from './chat/chat.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { RoomModule } from './room/room.module';
+import { MessageModule } from './message/message.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -20,6 +21,7 @@ import { RoomModule } from './room/room.module';
       rootPath: join(__dirname, '..', 'src', 'public'),
     }),
     RoomModule,
+    MessageModule,
   ],
 
   controllers: [AppController],

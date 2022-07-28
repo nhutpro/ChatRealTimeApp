@@ -44,7 +44,8 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
       const getToken = token.split(' ')[1];
       console.log(getToken);
       const user = await this.authService.verifyJwt(getToken);
-      await this.roomService.getRoom(user._id);
+      const room = await this.roomService.getRoom(user._id);
+      this.server.to(socket.id).emit('room', room);
     } catch (err) {
       console.log(err);
       this.disconnect(socket);

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
+import * as mongoose from 'mongoose';
 import { Room, RoomDocument } from './room.schema/room.schema';
 @Injectable()
 export class RoomService {
@@ -9,16 +10,22 @@ export class RoomService {
   ) {}
 
   async createRoom(userList: any) {
-    for (let i = 0; i < userList.lenth; i++) {
-      userList[i] = new Types.ObjectId(userList[i]);
+    const dataList = [];
+    for (let i = 0; i < userList.length; i++) {
+      dataList[i] = new Types.ObjectId(userList[i]);
     }
-    console.log(userList);
     return await this.RoomModel.create({
-      users: userList,
+      users: dataList,
     });
   }
   async getRoom(userId: any) {
-    const room = await this.RoomModel.findOne({}).populate({ path: 'users' });
-    console.log(room);
+    const room = await this.RoomModel.find({
+      users: userId,
+    }).populate({
+      path: 'users',
+      match: { _id: { $ne: userId } },
+      select: ['_id', 'avatar', 'username'],
+    });
+    return room;
   }
 }
