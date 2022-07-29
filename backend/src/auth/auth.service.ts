@@ -36,7 +36,7 @@ export class AuthService {
     const hashedPassword: string = await this.hashPassword(user.password);
     user.password = hashedPassword;
     const newUser = await this.userService.create(user);
-    console.log('newUser', newUser);
+
     if (newUser) {
       return {
         message: 'sign up successfully',

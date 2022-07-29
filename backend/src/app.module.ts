@@ -28,4 +28,3 @@ import { MessageModule } from './message/message.module';
   providers: [AppService],
 })
 export class AppModule {}
-console.log(join(__dirname, '..', 'src', 'public'));

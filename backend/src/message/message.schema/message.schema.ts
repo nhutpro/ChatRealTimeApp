@@ -11,13 +11,13 @@ export type MessageDocument = Message & Document;
 })
 export class Message {
   //   @Prop({ type: [Type.Types.ObjectId], ref: 'User' })
-  @Prop({ type: [{ type: Type.Types.ObjectId, ref: 'Room' }] })
+  @Prop({ type: Type.Types.ObjectId, ref: 'Room' })
   room: Room;
 
-  @Prop({ type: [{ type: Type.Types.ObjectId, ref: 'User' }] })
+  @Prop({ type: Type.Types.ObjectId, ref: 'User' })
   user: User;
 
   @Prop()
   message: string;
 }
-export const RoomSchema = SchemaFactory.createForClass(Message);
+export const MessageSchema = SchemaFactory.createForClass(Message);

@@ -1,10 +1,10 @@
 .home {
     .home__body {
         display: flex;
-        .listFriend{
+        .home--listFriend{
             width: 40%;
         }
-        .listMessage{
+        .home--listMessage{
             width: 60% ;
         }
     }

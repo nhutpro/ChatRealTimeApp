@@ -18,6 +18,22 @@ export class RoomService {
       users: dataList,
     });
   }
+  async createTwoRoom(userList: any) {
+    const dataList = [];
+    for (let i = 0; i < userList.length; i++) {
+      dataList[i] = new Types.ObjectId(userList[i]);
+    }
+    const room = await this.RoomModel.findOne({
+      users: { $all: [...userList] },
+    });
+    console.log(room);
+    if (room) {
+      return room;
+    } else {
+      console.log('vao day');
+      return await this.createRoom(userList);
+    }
+  }
   async getRoom(userId: any) {
     const room = await this.RoomModel.find({
       users: userId,

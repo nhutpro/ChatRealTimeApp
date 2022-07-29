@@ -15,7 +15,7 @@ export class UserService {
     const user = await this.UserModel.findOne({
       $or: [{ email: email }, { username: username }],
     });
-    console.log(user);
+
     if (user) {
       return true;
     } else return false;
@@ -55,7 +55,7 @@ export class UserService {
   // }
   async create(user: any): Promise<any> {
     const isExist = await this.isExist(user.username, user.password);
-    console.log('isExist', isExist);
+
     if (isExist) {
       return null;
     } else {
@@ -63,7 +63,15 @@ export class UserService {
       return newUser;
     }
   }
+  async findUserByUsername(username: string): Promise<any> {
+    const re = '^' + username;
+    const regularExpression = new RegExp(re, 'g');
+    const user = await this.UserModel.find({
+      username: { $regex: regularExpression },
+    });
 
+    return user;
+  }
   signupUserDtoToEntity(SignupUserDto: SignupUserDto): UserI {
     return {
       email: SignupUserDto.email,

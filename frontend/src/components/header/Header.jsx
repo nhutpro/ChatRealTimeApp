@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { logout } from '../../redux/user'
 const Header = () => {
     const avatar = useSelector((state)=> state.user.current.avatar)
- 
+    const username = useSelector((state)=> state.user.current.username)
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const handleLogout = () => {
@@ -16,11 +16,12 @@ const Header = () => {
     }
   return (
     <div className="header">
-        <div className='header__start'>Trần Nhựt</div>
+        <div className='header__start'>{username}</div>
         <div className='header__end'>
             <div className='avatar__box'>
                 <img src={avatar} alt = "avatar"></img>
             </div>
+          
             <div>
                 <button onClick={handleLogout}>Log out</button>
             </div>

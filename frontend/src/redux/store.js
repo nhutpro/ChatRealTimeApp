@@ -1,5 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import userSlice from "./user";
+import messageSlice from "./message";
 import {
   persistStore,
   persistReducer,
@@ -16,7 +17,7 @@ const persistConfig = {
   version: 1,
   storage,
 };
-const rootReducer = combineReducers({ user: userSlice});
+const rootReducer = combineReducers({ user: userSlice, message: messageSlice });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({

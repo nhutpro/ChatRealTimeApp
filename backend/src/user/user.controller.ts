@@ -19,11 +19,9 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 export class UserController {
   constructor(private userService: UserService) {}
 
-  @UseGuards(JwtAuthGuard)
-  @Post('login')
-  login(@Body() LoginUserDto: LoginUserDto) {
-    // console.log(LoginUserDto);
-    // const user: UserI = this.userService.loginUserDtoToEntity(LoginUserDto);
-    // return this.userService.login(user);
+  // @UseGuards(JwtAuthGuard)
+  @Get('find')
+  async findUsername(@Req() req: any) {
+    return await this.userService.findUserByUsername(req.query.username);
   }
 }
