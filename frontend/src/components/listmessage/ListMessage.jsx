@@ -32,7 +32,7 @@ const ListMessage = ({socket,roomId,messageData}) => {
     <div className='listMessage'>
         <p>id room: {roomId}</p>
         <div className='message__list'>
-           {messageData.length !==0? messageData.map((item,index)=><Message key={index} message={item.message}  me={item.user === user ? true: false }></Message>):<></>}
+           {messageData.length !==0? messageData.map((item,index)=><Message key={index} message={item}  me={item.user._id === user ? true: false }></Message>):<></>}
         </div>
         <div className='message__send'>
            <form>

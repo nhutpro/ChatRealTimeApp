@@ -10,6 +10,8 @@ import "./Home.scss"
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useRef } from 'react';
+import axios from 'axios';
+
 
 const Home = () => {
     const accessToken = useSelector((state)=>state.user.current.accessToken)
@@ -28,14 +30,17 @@ const Home = () => {
     //   extraHeaders: {
     //     Authorization: "Bearer "+ accessToken
     //   }});
-    const handleCreateRoom = (friendId,userId)=>{
+    const handleCreateRoom = async (friendId,userId)=>{
     
       console.log("mang",friendId,userId)
       socket.current.emit("cTsjoinRoom",{
         users:[friendId,userId]
       })
-      socket.current.on('sTcjoinRoom',(data)=>{
-        handleOpenMessage(data.room._id,[])
+     
+      socket.current.on('sTcjoinRoom', async (data)=>{
+        const message = await  axios.get(process.env.REACT_APP_SERVER_PATH+"message?roomId="+data.room._id, { headers: {"Authorization" : `Bearer ${accessToken}`} })
+   
+        handleOpenMessage(data.room._id,[...message.data])
       })}
     useEffect(()=>{
       socket.current = io.connect("http://localhost:3001", {
@@ -43,6 +48,7 @@ const Home = () => {
             Authorization: "Bearer "+ accessToken
           }});
      const callback = (payload)=>{
+      console.log(payload.message)
       setMessageData((prev)=>[...prev, payload.message])
      }
       socket.current.on("sTcRoomMessage",callback)

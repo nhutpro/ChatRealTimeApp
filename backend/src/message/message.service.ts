@@ -8,6 +8,18 @@ export class MessageService {
     @InjectModel(Message.name) private MessageModel: Model<MessageDocument>,
   ) {}
   async createMessage(payload: any) {
-    return await this.MessageModel.create({ ...payload });
+    return await (
+      await this.MessageModel.create({ ...payload })
+    ).populate({
+      path: 'user',
+    });
+  }
+  async getMessageInRoom(RoomId: any) {
+    const message = await this.MessageModel.find({ room: RoomId })
+      .populate({
+        path: 'user',
+      })
+      .sort({ createdAt: 1 });
+    return message;
   }
 }

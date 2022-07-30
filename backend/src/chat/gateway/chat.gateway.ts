@@ -46,7 +46,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @SubscribeMessage('cTsnewMessage')
   async newMessage(client: any, payload: any): Promise<any> {
     const message = await this.messageService.createMessage(payload);
-    console.log('message', message.message);
+
     this.server.to(payload.room.trim()).emit('sTcRoomMessage', {
       message: message,
     });
